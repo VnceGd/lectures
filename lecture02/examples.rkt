@@ -42,11 +42,63 @@
 ;   of the tail of l1 and l2.
 ;
 ; Example:
+#lang racket
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; List Examples
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Compute the length of the list l
+;   The length of the empty list is 0.
+;   The length of a non-empty list is 1 + the length of the cdr of the list.
+;
+; Examples:
+;   (length '()) => 0
+;   (length '(1 2)) => 2
+;   (length '(1 (2 3))) => 2
+;
+
+(define (length l)
+  (if (null? l)
+      0
+      (+ 1 (length (cdr l)))))
+
+;
+; Compute the sum of a list of integers
+;
+; Example:
+;   (sum '(1 2 3 4)) => 10
+
+(define (sum xs)
+  (if (null? xs)
+      0
+      (+ (car xs) (sum (cdr xs)))))
+
+; Return the nth element of a list, counting from 0.
+;
+; Examples:
+;  (nth 0 '(1 2 3)) => 1
+;  (nth 2 '(1 2 3)) => 3
+
+(define (nth n l)
+  (if (= n 0)
+      (car l)
+      (nth (- n 1) (cdr l))))
+
+; Concatenate the lists l1 and l2 (append l2 to l1)
+;   The concatention of l1 and l2 is equal to l2 if l1 is null.
+;   Otherwise it is the list whose first element (car) is the first
+;   element of l1 and whose tail (cdr) is equal to the concatention
+;   of the tail of l1 and l2.
+;
+; Example:
 ;   (concat '(1 2 3) '(4 5 6)) => (1 2 3 4 5 6)
 ;
 
 (define (concat l1 l2)
-  'not-implemented)
+  (if (null? l1)
+      l2
+      (cons (car l1) (concat (cdr l1) l2))))
 
 ; Count the number of integers in a list
 ;  The number of integers in an object that is an integer is 1.
@@ -76,7 +128,9 @@
 ;
 
 (define (map f lst)
-  'not-implemented)
+  (if (null? lst)
+      null
+      (cons (f (car lst) (map f (cdr lst))))))
 
 ;
 ; Calculate the sum of squares of a list of integers. Make the function non-recursive.
@@ -86,10 +140,10 @@
 ;
 
 (define (sum-of-squares xs)
-  'not-implemented)
+  (sum (map (lambda (x) (* x x)) xs)))
 
 ;
-; Reduce a list of values to a single value by repeatedly application of a binary function. 
+; Reduce a list of values to a single value by repeated application of a binary function. 
 ;
 ; Examples:
 ;   (reduce + 0 '(1 2 3 4)) => 10
@@ -97,7 +151,16 @@
 ;
 
 (define (reduce f z xs)
-  'not-implemented)
+  (if (null? xs)
+      z
+      (f (car xs) (reduce f z (cdr xs)))))
+      
+(define (filter f xs)
+  (cond
+    [(null? xs) null]
+    [(if (car xs)
+         (cons (car xs) (filter f (cdr xs)))
+         (filter f (cdr xs)))]))
 
 ; Compute the order of an object (maximum depth)
 ;  The order of an atom is 0.
@@ -123,10 +186,10 @@
 ; That is, ((compose f g) x) should be the same as (f (g x))
 
 (define (compose f g)
-  'not-implemented)
+  (lambda (x) (f (g x))))
 
 ; Write a function that partially applies a function to a single argument.
 ; That is, ((papply f x) y) should be the same as (f x y)
 
 (define (papply f x)
-  'not-implemented)
+  (lambda (y) (f x y)))
