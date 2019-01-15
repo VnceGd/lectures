@@ -15,50 +15,6 @@
 ;
 
 (define (length l)
-  'not-implemented)
-
-;
-; Compute the sum of a list of integers
-;
-; Example:
-;   (sum '(1 2 3 4)) => 10
-
-(define (sum xs)
-  'not-implemented)
-
-; Return the nth element of a list, counting from 0.
-;
-; Examples:
-;  (nth 0 '(1 2 3)) => 1
-;  (nth 2 '(1 2 3)) => 3
-
-(define (nth n l)
-  'not-implemented)
-
-; Concatenate the lists l1 and l2 (append l2 to l1)
-;   The concatention of l1 and l2 is equal to l2 if l1 is null.
-;   Otherwise it is the list whose first element (car) is the first
-;   element of l1 and whose tail (cdr) is equal to the concatention
-;   of the tail of l1 and l2.
-;
-; Example:
-#lang racket
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; List Examples
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; Compute the length of the list l
-;   The length of the empty list is 0.
-;   The length of a non-empty list is 1 + the length of the cdr of the list.
-;
-; Examples:
-;   (length '()) => 0
-;   (length '(1 2)) => 2
-;   (length '(1 (2 3))) => 2
-;
-
-(define (length l)
   (if (null? l)
       0
       (+ 1 (length (cdr l)))))
